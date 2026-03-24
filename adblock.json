@@ -79,6 +79,14 @@
 		"final": "doh_dns",
 		"strategy": "prefer_ipv4"
 	},
+	"experimental": {
+		"cache_file": {
+			"enabled": true,
+			"path": "",
+			"cache_id": "cache.db",
+			"store_fakeip": false
+		}
+	},
 	"inbounds": [
 		{
 			"type": "tun",
