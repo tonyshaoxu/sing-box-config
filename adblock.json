@@ -1,0 +1,181 @@
+{
+	"dns": {
+		"servers": [
+			{
+				"tag": "doh_dns",
+				"type": "https",
+				"server": "dns.google",
+				"path": "/dns-query",
+				"domain_resolver": "cf_dns"
+			},
+			{
+				"tag": "local_dns",
+				"type": "udp",
+				"server": "114.114.114.114"
+			},
+			{
+				"tag": "cf_dns",
+				"type": "udp",
+				"server": "1.1.1.1"
+			}
+		],
+		"rules": [
+			{
+				"query_type": [
+					"HTTPS"
+				],
+				"action": "reject"
+			},
+			{
+				"domain": [
+					"dns.weixin.qq.com.cn",
+					"dns.weixin.qq.com"
+				],
+				"domain_keyword": [
+					"dns",
+					"httpdns"
+				],
+				"action": "reject"
+			},
+			{
+				"rule_set": [
+					"geosite-category-ads-all",
+					"geosite-qihoo360",
+					"geosite-tencent",
+					"geosite-category-porn"
+				],
+				"action": "reject"
+			},
+			{
+				"domain": [
+					"global.market.xiaomi.com"
+				],
+				"server": "cf_dns",
+				"disable_cache": true
+			},
+			{
+				"rule_set": [
+					"geosite-geolocation-cn",
+					"geosite-cn"
+				],
+				"server": "local_dns"
+			},
+			{
+				"type": "logical",
+				"mode": "and",
+				"rules": [
+					{
+						"rule_set": "geosite-geolocation-!cn",
+						"invert": true
+					},
+					{
+						"rule_set": "geoip-cn"
+					}
+				],
+				"server": "doh_dns",
+				"client_subnet": "114.114.114.114/24"
+			}
+		],
+		"final": "doh_dns",
+		"strategy": "prefer_ipv4"
+	},
+	"inbounds": [
+		{
+			"type": "tun",
+			"tag": "tun-in",
+			"interface_name": "utun10",
+			"address": [
+				"172.19.0.0/30"
+			],
+			"auto_route": true,
+			"strict_route": true,
+			"sniff": true,
+			"sniff_override_destination": true
+		}
+	],
+	"outbounds": [
+		{
+			"tag": "Direct",
+			"type": "direct"
+		}
+	],
+	"route": {
+		"default_domain_resolver": {
+			"server": "doh_dns"
+		},
+		"auto_detect_interface": true,
+		"rule_set": [
+			{
+				"tag": "geosite-category-ads-all",
+				"type": "remote",
+				"format": "binary",
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-category-ads-all.srs"
+			},
+			{
+				"tag": "geosite-category-porn",
+				"type": "remote",
+				"format": "binary",
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-category-porn.srs"
+			},
+			{
+				"tag": "geosite-geolocation-cn",
+				"type": "remote",
+				"format": "binary",
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-cn.srs"
+			},
+			{
+				"tag": "geoip-cn",
+				"type": "remote",
+				"format": "binary",
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs"
+			},
+			{
+				"tag": "geosite-cn",
+				"type": "remote",
+				"format": "binary",
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-cn.srs"
+			},			
+			{
+				"tag": "geosite-qihoo360",
+				"type": "remote",
+				"format": "binary",
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-qihoo360.srs"
+			},			
+			{
+				"tag": "geosite-tencent",
+				"type": "remote",
+				"format": "binary",
+				"url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-tencent.srs"
+			}
+		],
+		"rules": [
+			{
+				"action": "sniff",
+				"sniffer": [
+					"http",
+					"tls",
+					"quic",
+					"dns"
+				],
+				"timeout": "500ms"
+			},
+			{
+				"protocol": "dns",
+				"action": "hijack-dns"
+			},
+			{
+				"port": 53,
+				"action": "hijack-dns"
+			},
+			{
+				"protocol": [
+					"quic",
+					"stun",
+					"udp"
+				],
+				"action": "reject"
+			}			
+		],
+		"final": "Direct"
+	}
+}
