@@ -1,0 +1,34 @@
+# 腾讯游戏官方网站、登录和分发中心
+game.qq.com
+wegame.com
+tgp.qq.com
+pay.qq.com
+
+# 游戏防沉迷系统与实名认证（阻断此项，新老游戏将无法完成登录验证）
+fcm.qq.com
+antiaddiction.qq.com
+
+# 游戏公共 SDK、网络登录与防作弊组件
+msdk.qq.com
+tdm.qq.com
+gcloud.tencent.com
+gcloud.qq.com
+
+# 腾讯海外游戏发行品牌（如果您想同时屏蔽海外版/国际服游戏）
+levelinfinite.com
+tencentgames.com
+intlgame.com
+igamecj.com
+
+# 热门游戏的专属独立二级域名
+pay.qq.com
+xinyue.qq.com
+pvp.qq.com
+lol.qq.com
+dnf.qq.com
+cf.qq.com
+gp.qq.com
+jcc.qq.com
+wuxia.qq.com
+codm.qq.com
+val.qq.com
