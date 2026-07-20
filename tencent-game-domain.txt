@@ -61,7 +61,7 @@ voipfindereventsliveplay.wxqcloud.qq.com
 csycdn.flv.wxqcloud.qq.com
 voipfinderliveplaythird.wxqcloud.qq.com
 aliycdn.flv.wxqcloud.qq.com
-voipfinderliveplay.wxqcloud.qq.comer
+voipfinderliveplay.wxqcloud.qq.com
 pull-m1.wxlivecdn.com
 voipfinderrdsliveplay3.wxqcloud.qq.com
 hscdn.flv.wxqcloud.qq.com
@@ -71,6 +71,5 @@ voipfinderrdsliveplay.wxqcloud.qq.com
 voipfinderliveplaythirdtest.wxqcloud.qq.com
 hw.flv.wxqcloud.qq.com
 res.wx.qq.com
-ement-pa.googleapis.comernaive-phx1
 findera4.video.qq.com
 finderyysw.video.qq.com
